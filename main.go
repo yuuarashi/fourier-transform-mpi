@@ -60,11 +60,11 @@ func main() {
 	drawFTPlot(fourier, sampleRate, plotFilename)
 
 	peakStart, peakEnd := findPeak(fourier, sampleRate)
-	for i := range fourier {
-		if peakStart <= i && i <= peakEnd {
-			fourier[i] = 0
-		}
+	for i := peakStart; i <= peakEnd; i++ {
+		fourier[i] = 0
+		fourier[len(fourier)-i-1] = 0
 	}
+
 	startTimestamp = time.Now()
 	invFourier := idft(fourier)
 	finishTimestamp = time.Now()
